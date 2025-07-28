@@ -108,6 +108,9 @@ The plugin provides comprehensive support for Elementor page builder:
 
 ## Changelog
 
+### Version 1.0.1
+- Fixed Elementor column nested background issue
+
 ### Version 1.0.0
 - Initial release
 - Basic dark/light mode toggle functionality

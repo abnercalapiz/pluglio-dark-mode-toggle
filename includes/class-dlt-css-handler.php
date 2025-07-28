@@ -59,7 +59,7 @@ class DLT_CSS_Handler {
         }
 
         [data-theme='dark'] {
-            --dlt-bg-color: #1a1a1a;
+            --dlt-bg-color: #2d2d2d;
             --dlt-text-color: #e0e0e0;
             --dlt-header-bg: #2d2d2d;
             --dlt-border-color: #404040;
@@ -136,7 +136,8 @@ class DLT_CSS_Handler {
         [data-theme='dark'] .e-con-inner,
         [data-theme='dark'] .e-con-boxed,
         [data-theme='dark'] .elementor-inner-section,
-        [data-theme='dark'] .elementor-section.elementor-inner-section {
+        [data-theme='dark'] .elementor-section.elementor-inner-section,
+        [data-theme='dark'] .elementor-column .elementor-widget-wrap {
             background-color: var(--dlt-card-bg) !important;
             color: var(--dlt-text-color) !important;
         }
