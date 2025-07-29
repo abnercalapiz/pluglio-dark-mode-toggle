@@ -3,7 +3,7 @@
  * Plugin Name: Pluglio Dark Mode Toggle
  * Plugin URI: https://www.jezweb.com.au
  * Description: Add a beautiful dark/light mode toggle to your WordPress website with smooth transitions and persistent user preferences.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Jezweb
  * Author URI: https://www.jezweb.com.au
  * License: GPL v2 or later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 // Define plugin constants
 define('DLT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DLT_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('DLT_PLUGIN_VERSION', '1.0.1');
+define('DLT_PLUGIN_VERSION', '1.0.2');
 
 // Load dependencies
 require_once DLT_PLUGIN_PATH . 'includes/class-dlt-css-handler.php';

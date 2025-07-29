@@ -69,7 +69,6 @@ class DLT_CSS_Handler {
             --dlt-button-bg: " . $dark_button_bg_color . ";
             --dlt-button-text: #ffffff;
         }
-
         /* Only apply color overrides in dark mode */
         [data-theme='dark'] body {
             background-color: var(--dlt-bg-color) !important;
@@ -140,8 +139,19 @@ class DLT_CSS_Handler {
         [data-theme='dark'] .elementor-column .elementor-widget-wrap {
             background-color: var(--dlt-card-bg) !important;
             color: var(--dlt-text-color) !important;
+			border: none !important;
         }
-
+		[data-theme='dark'] .elementor-shape .elementor-shape-fill {
+			fill: transparent !important;
+		}
+		[data-theme='dark'] .dlt-toggle:hover {
+			color: #000000 !important;
+			background: #ffffff !important;
+		}
+		[data-theme='dark'] .dlt-toggle * {
+			color: #000000 !important;
+			fill: #000000 !important;
+		}
         [data-theme='dark'] .elementor-section[data-settings*=\"background_background\"]:not([data-settings*=\"gradient\"]),
         [data-theme='dark'] .e-con[data-settings*=\"background_background\"]:not([data-settings*=\"gradient\"]) {
             background-color: var(--dlt-card-bg) !important;
@@ -268,7 +278,21 @@ class DLT_CSS_Handler {
         [data-theme='dark'] .dlt-light-icon {
             display: none;
         }
-
+		[data-theme='dark'] ul.sub-menu li a {
+			background: var(--dlt-bg-color) !important;
+		}
+		[data-theme='light'] .dlt-toggle * {
+			color: #ffffff !important;
+			fill: #ffffff !important;
+		}
+		[data-theme='light'] button.dlt-toggle {
+			background: #000000 !important;
+			color: #ffffff !important;
+		}
+		[data-theme='dark'] button.dlt-toggle {
+			background: #ffffff !important;
+			color: #000000 !important;		
+		}
         @media (max-width: 768px) {
             .dlt-toggle {
                 padding: 6px 10px;
