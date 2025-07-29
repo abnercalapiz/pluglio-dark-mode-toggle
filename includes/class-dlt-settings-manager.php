@@ -21,7 +21,8 @@ class DLT_Settings_Manager {
         'show_text' => 'yes',
         'enable_auto_detect' => 'yes',
         'dark_link_color' => '#4a9eff',
-        'dark_button_bg_color' => '#4a9eff'
+        'dark_button_bg_color' => '#4a9eff',
+        'dark_mode_logo' => ''
     );
     
     public function get_option($option_name, $default = null) {

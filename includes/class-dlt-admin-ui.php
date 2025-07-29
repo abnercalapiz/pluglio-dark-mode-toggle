@@ -43,6 +43,8 @@ class DLT_Admin_UI {
             array($this, 'sanitize_color'));
         register_setting('dlt_settings_group', $this->settings_manager->get_option_name('dark_button_bg_color'), 
             array($this, 'sanitize_color'));
+        register_setting('dlt_settings_group', $this->settings_manager->get_option_name('dark_mode_logo'), 
+            array($this, 'sanitize_logo'));
         
         // Add settings section
         add_settings_section(
@@ -96,6 +98,14 @@ class DLT_Admin_UI {
             'dlt_settings_page',
             'dlt_main_section'
         );
+        
+        add_settings_field(
+            'dlt_dark_mode_logo',
+            __('Dark Mode Logo', 'pluglio-dark-mode-toggle'),
+            array($this, 'render_dark_mode_logo_field'),
+            'dlt_settings_page',
+            'dlt_main_section'
+        );
     }
     
     public function render_admin_page() {
@@ -134,6 +144,7 @@ class DLT_Admin_UI {
                 <li><?php _e('System preference detection', 'pluglio-dark-mode-toggle'); ?></li>
                 <li><?php _e('Mobile responsive design', 'pluglio-dark-mode-toggle'); ?></li>
                 <li><?php _e('Accessibility support', 'pluglio-dark-mode-toggle'); ?></li>
+                <li><?php _e('Dark mode logo switching - automatically swap your site logo when dark mode is active', 'pluglio-dark-mode-toggle'); ?></li>
             </ul>
             
             <h3><?php _e('JavaScript API:', 'pluglio-dark-mode-toggle'); ?></h3>
@@ -327,5 +338,104 @@ window.addEventListener('dltThemeChanged', function(e) {
     
     public function sanitize_color($value) {
         return $this->settings_manager->validate_color($value);
+    }
+    
+    public function render_dark_mode_logo_field() {
+        $option_name = $this->settings_manager->get_option_name('dark_mode_logo');
+        $logo_url = $this->settings_manager->get_option('dark_mode_logo');
+        ?>
+        <div class="dlt-logo-upload">
+            <input type="hidden" name="<?php echo esc_attr($option_name); ?>" 
+                   id="dlt_dark_mode_logo" 
+                   value="<?php echo esc_attr($logo_url); ?>">
+            
+            <div id="dlt_logo_preview" style="margin-bottom: 10px;">
+                <?php if ($logo_url) : ?>
+                    <img src="<?php echo esc_url($logo_url); ?>" 
+                         style="max-width: 200px; max-height: 100px; display: block; margin-bottom: 10px;">
+                <?php endif; ?>
+            </div>
+            
+            <button type="button" class="button" id="dlt_upload_logo_button">
+                <?php _e('Select Logo', 'pluglio-dark-mode-toggle'); ?>
+            </button>
+            
+            <?php if ($logo_url) : ?>
+                <button type="button" class="button" id="dlt_remove_logo_button" style="margin-left: 10px;">
+                    <?php _e('Remove Logo', 'pluglio-dark-mode-toggle'); ?>
+                </button>
+            <?php endif; ?>
+            
+            <p class="description">
+                <?php _e('Upload a logo to display when dark mode is active. The current site logo will be used for light mode.', 'pluglio-dark-mode-toggle'); ?>
+            </p>
+        </div>
+        
+        <script>
+        jQuery(document).ready(function($) {
+            // Media uploader
+            $('#dlt_upload_logo_button').click(function(e) {
+                e.preventDefault();
+                
+                var mediaUploader = wp.media({
+                    title: '<?php echo esc_js(__('Select Dark Mode Logo', 'pluglio-dark-mode-toggle')); ?>',
+                    button: {
+                        text: '<?php echo esc_js(__('Use this logo', 'pluglio-dark-mode-toggle')); ?>'
+                    },
+                    multiple: false
+                });
+                
+                mediaUploader.on('select', function() {
+                    var attachment = mediaUploader.state().get('selection').first().toJSON();
+                    $('#dlt_dark_mode_logo').val(attachment.url);
+                    
+                    // Update preview
+                    $('#dlt_logo_preview').html(
+                        '<img src="' + attachment.url + '" style="max-width: 200px; max-height: 100px; display: block; margin-bottom: 10px;">'
+                    );
+                    
+                    // Show remove button
+                    if (!$('#dlt_remove_logo_button').length) {
+                        $('#dlt_upload_logo_button').after(
+                            '<button type="button" class="button" id="dlt_remove_logo_button" style="margin-left: 10px;">' +
+                            '<?php echo esc_js(__('Remove Logo', 'pluglio-dark-mode-toggle')); ?>' +
+                            '</button>'
+                        );
+                        bindRemoveButton();
+                    }
+                });
+                
+                mediaUploader.open();
+            });
+            
+            // Remove logo
+            function bindRemoveButton() {
+                $('#dlt_remove_logo_button').click(function(e) {
+                    e.preventDefault();
+                    $('#dlt_dark_mode_logo').val('');
+                    $('#dlt_logo_preview').html('');
+                    $(this).remove();
+                });
+            }
+            
+            // Bind remove button if it exists
+            bindRemoveButton();
+        });
+        </script>
+        <?php
+    }
+    
+    public function sanitize_logo($value) {
+        // Validate URL
+        if (empty($value)) {
+            return '';
+        }
+        
+        // Check if it's a valid URL
+        if (filter_var($value, FILTER_VALIDATE_URL)) {
+            return esc_url_raw($value);
+        }
+        
+        return '';
     }
 }

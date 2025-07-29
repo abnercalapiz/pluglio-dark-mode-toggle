@@ -3,7 +3,7 @@
  * Plugin Name: Pluglio Dark Mode Toggle
  * Plugin URI: https://www.jezweb.com.au
  * Description: Add a beautiful dark/light mode toggle to your WordPress website with smooth transitions and persistent user preferences.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Jezweb
  * Author URI: https://www.jezweb.com.au
  * License: GPL v2 or later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 // Define plugin constants
 define('DLT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('DLT_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('DLT_PLUGIN_VERSION', '1.0.2');
+define('DLT_PLUGIN_VERSION', '1.0.3');
 
 // Load dependencies
 require_once DLT_PLUGIN_PATH . 'includes/class-dlt-css-handler.php';
@@ -59,6 +59,7 @@ class DarkModeToggle {
         if (is_admin()) {
             add_action('admin_menu', array($this->admin_ui, 'add_admin_menu'));
             add_action('admin_init', array($this->admin_ui, 'admin_init'));
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         }
         
         // Plugin activation/deactivation hooks are registered outside the class
@@ -74,6 +75,17 @@ class DarkModeToggle {
         wp_register_script('dlt-script', false, array(), $this->version, true);
         wp_enqueue_script('dlt-script');
         wp_add_inline_script('dlt-script', $this->js_handler->get_javascript());
+    }
+    
+    public function enqueue_admin_scripts($hook) {
+        // Only load on our settings page
+        if ($hook !== 'settings_page_pluglio-dark-mode-toggle') {
+            return;
+        }
+        
+        // Enqueue media uploader and jQuery
+        wp_enqueue_media();
+        wp_enqueue_script('jquery');
     }
     
     
@@ -92,5 +104,3 @@ $dark_mode_toggle = new DarkModeToggle();
 // Register activation/deactivation hooks
 register_activation_hook(__FILE__, array($dark_mode_toggle, 'activate'));
 register_deactivation_hook(__FILE__, array($dark_mode_toggle, 'deactivate'));
-
-?>

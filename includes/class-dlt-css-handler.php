@@ -293,6 +293,13 @@ class DLT_CSS_Handler {
 			background: #ffffff !important;
 			color: #000000 !important;		
 		}
+		[data-theme='dark'] .no-bg-color .elementor-container,
+		[data-theme='dark'] .no-bg-color .elementor-container .elementor-widget-wrap {
+			background: none !important;
+		}
+        [data-theme='dark'] .elementor-widget-theme-site-logo .elementor-widget-container {
+            background-color: var(--dlt-card-bg) !important;
+        }
         @media (max-width: 768px) {
             .dlt-toggle {
                 padding: 6px 10px;

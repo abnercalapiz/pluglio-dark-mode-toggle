@@ -16,6 +16,7 @@ Pluglio Dark Mode Toggle adds a sleek dark/light mode switcher to your WordPress
 - **Accessibility Support**: Proper ARIA labels and keyboard navigation
 - **Elementor Compatibility**: Full support for Elementor page builder including nested sections and containers
 - **Color Customization**: Control link and button colors in dark mode
+- **Dark Mode Logo**: Automatically switch to a different logo when dark mode is active
 - **No Dependencies**: Lightweight implementation with vanilla JavaScript
 
 ## Installation
@@ -35,6 +36,7 @@ Access the plugin settings from **Settings > Pluglio Dark Mode** in your WordPre
 - **Auto-detect System Preference**: Respect user's system theme preference
 - **Dark Mode Link Color**: Customize the color of links in dark mode
 - **Dark Mode Button Background**: Customize the background color of Elementor buttons in dark mode
+- **Dark Mode Logo**: Upload a logo to display when dark mode is active (uses existing site logo for light mode)
 
 ### JavaScript API
 
@@ -107,6 +109,15 @@ The plugin provides comprehensive support for Elementor page builder:
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
 ## Changelog
+
+### Version 1.0.3
+- Added dark mode logo feature - automatically switch site logo when dark mode is active
+- Improved logo detection to only target actual site logos (not all images)
+- Added support for Elementor Site Logo widget
+- Fixed PHP syntax errors in admin JavaScript
+- Enhanced media uploader integration
+- Added data attribute tracking for precise logo switching
+- Improved compatibility with various WordPress themes
 
 ### Version 1.0.2
 - Fixed CSS styling issues to enhance light and dark mode
